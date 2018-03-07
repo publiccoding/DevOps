@@ -1,0 +1,44 @@
+ANSIBLE document
+
+1. Ansible controller work as controller server and it has own inventory called /etc/ansible/hosts 
+   where it will store all the host list ( nodes)
+
+2. configure credentials 
+vi /etc/ssh/sshd_config # enable password authentication no to yes 
+restart sshd 
+3. adduser ansible ; passwd ansible
+add in visudo with all permisoin on all the ndoes including controller 
+4.ansible -i <hosts_file_path> -m ping all ( will ping only the listed in new hosts file )
+5.writing yaml 
+
+Grouping of the hosts 
+
+in /etc/ansible/hosts file you can group the hosts by by square brackets [hosts]
+ansible -m ping <group_name>
+ansible -m setup localhost # to get the host details with adhoc command 
+ansible -m setup -a 'filter=*os* <ip> # adhoc commad will be used one time to get detail( it is development command)
+ansible-playbook -i invertory_file test.yaml 
+ansible --become -m apt -a 'update_cache=yes' ip -K --list-hosts # --become is sudo user persion will ask for password 
+ansible-playbook hellworl.yaml --list-hosts
+ansible --become  -K -i newinventory -m "apt" -a "name=tomcat7 state=present" webserver # install tomcat on ther server 
+ansible --become  -K -i newinventory -m "apt" -a "name=tomcat7 state=absent purge=yes" webserver # uninstall tomcat on the server 
+
+ansible -m setup -a "filter=*_os*" all  # use host_family to filter os type and through fact you can 
+changing the ansible variable in commad line(highest priority cmd ->playbook-inventory->groupvariable)
+ansible-playbook -K -i inventory -e "state_set: absent" -e "xyz"   *.yaml
+
+for redhat set selinux as permissive mode 
+---
+- BusDetails:
+  - Source: HYD
+    Dest: SBC
+    Price:900
+    isDailyTrip: yes
+    BoardingPoints:
+      - X
+      - yaml
+    BusType:
+      - Volvo
+      - Sleeper
+
+

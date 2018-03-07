@@ -1,0 +1,60 @@
+
+
+
+git clone https://github.com/publiccoding/demorepo.git
+git status 
+GitPractice
+$ git status
+fatal: Not a git repository (or any of the parent directories): .git
+
+kristhim@KRISTHIM4 MINGW64 ~/Desktop/thimma 01302017/programming/python/testing/GitPractice
+$ ls
+demorepo/
+$ cd demorepo/
+$git status ( will show the details) 
+$git add  file1, file2 ( or [./-A] # all untracked file will moved to staging area ) 
+$git commit (git -m commit) # it will move to staging area to local repository
+$git log # shows the information about every commit , all saved with unique id SHA code ( 40 characters) first 7 characters are important 
+$git push  # push it to remote repository
+$ git config --global user.name "thimma"
+$ git config --global user.email "thimmarayan.krishnappa@gmail.com"
+$ git config show --list
+$ git config reset remote.original.url 
+$ git log --online --decorate
+$ git reset HEAD # file will put into workspace 
+$ git log 
+$ git reset --soft (sha code)  # move to staging area 
+$ git reset HEAD  # get file from staging area to workspace 
+$ gitk  # show complete history 
+$ git reset --hard SHA code  # to  delete changes permanently 
+$ kristhim@KRISTHIM4 MINGW64 ~/Desktop/thimma 01302017/programming/Practice/Git Practice/central/myremote_repo.git
+$ git init --bare --shared # to create central bare repositoy locally  and do not create any directoy in bare repo as it will not be accisble to other users. 
+$ git init # change normal directory to git local repository 
+$ 
+git branch -all 
+git branch
+git branch module_settings
+git checkout module_settings
+git checkout master   # to jump to master branch
+git branch -d modlue_name # to delete the branch 
+git checkout module_menu # will pull all the file from master to modlue_menu branch 
+
+git branch -d the_local_branch
+To remove a remote branch (if you know what you are doing!)
+
+COPY
+git push origin :the_remote_branch
+or simply use the new syntax (v1.7.0)
+
+COPY
+git push origin --delete the_remote_branch
+Note
+
+If you get the error error: unable to push to unqualified destination: the_remote_branch The destination refspec neither matches an existing ref on the remote nor begins with refs/, and we are unable to guess a prefix based on the source ref. error: failed to push some refs to 'git@repository_name'
+
+perhaps someone else has already deleted the branch. Try to synchronize your branch list with
+
+COPY
+git fetch -p 
+
+

@@ -1,0 +1,84 @@
+https://api.chef.io/organizations/thimma/nodes
+
+ChefDK-> chef development kit should be installed in server(windows,linux),
+         it act a workstation to upload the chef cookbook and interaction with chef-server and enivironment path should be set 
+starter kit -> Should be downloaded from chef server it will help to connect the workstation with chef server from your chef workstation
+         ( for all the chef activity with that chef-server)
+chef Agent -> will be running on nodes and based on the convergence it will communicate with chef server for available update
+
+Bootstraping chef node:
+PS C:\Users\kristhim\Desktop\thimma\demorepo\chef\chef-starter\chef-repo> knife bootstrap 54.149.74.229 --ssh-user ubunt
+u --sudo --identity-file C:\Users\kristhim\Desktop\thimma\keys\chefpem.pem -N ec2-54-149-74-229.us-west-2.compute.amazonaws.com
+
+Chef commands:
+
+chef generate cookbook first-cookbook 
+knife node list
+knife upload cookbook first-cookbook
+berks install -> one time berks support strong version control 
+berks upload -> on every upload change the verion sin metadata.rb file 
+chef generate attribute <path to cookbook> <name_of_the_attribute>
+chef generate attribute . default
+chef generate recipes . myreciep
+chef generate file . myreciep
+chef generate template . message.txt # Edit the contect dynamially 
+cookbook-file -> to copy file from source to destination directory 
+
+#create role in roles directory and update them ( rolese are collection of sequence runlist will be applied to the server )
+
+knife role list
+knife role from file .\myrole 
+knife role bulk delete '^server'
+knife node run_list add <public_dns> 'role[myrole]'
+knife node run_list add <public_dns> 'recipe[cookbookname::recipe]'
+
+#enivironment in the chef used to maintain the cookbook version, change in the cookbook version include the run_list which is set and applied on each convergence
+
+knife enivironment from file .\enivironments\dev.rb
+knife enivironment list 
+knife enivironment bulk delete '^server'
+
+
+<%= "my name is #{$ruby}" %> - dynamic content in the file
+During every convergence node object will be created by Ohai and it collect all the system value 
+# if node['platform'] == 'ubuntu' 
+#     default['first-cookbook']['package_name'] = 'apache2'
+# else node['platform'] == 'redhat'
+#     default['first-cookbook']['package_name'] = 'httpd'
+# end
+
+default['first-cookbook']['package_names'] = ["tree","git","nano"]
+Attribute has following type and 
+
+                Attribute Files     Node/Recipe     enivironment   Role
+default             1                   2               3           4
+force_default       5                   6               
+normal              7                   8
+override            9                   10              12          11
+force_override      13                  14
+automatic      15 ( during convergence by ohai)
+
+Guards in chef ( only_if {condition} , not_if {condition })
+
+TestKitchen 
+
+kitchen converge
+kitchen destroy
+kitchen login
+
+ruby_block "some tricky operation" do
+  block do
+    OperationFoo
+    raise "Operation Foo Failed" if some_condition
+  end
+end
+
+
+
+
+
+
+
+
+
+
